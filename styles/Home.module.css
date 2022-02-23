@@ -1,11 +1,37 @@
 .container {
   display: block;
-  margin: auto;
+  margin: 1rem auto;
   max-width: 800px;
 }
 
-.results-continaer {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
+.query {
+  width: 100%;
+  min-height: 300px;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  padding: 1rem;
+  background-color: #FFDC00;
+  border: none;
+  color: #111111;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background-color: #ffffff;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 0.2rem solid #111111;
+  color: #111111;
+  font-family: 'Menlo', 'Bitstream Vera Sans Mono', 'Monaco', 'Consolas', monospace;
+}
+
+.results {
+  overflow-x: scroll;
+}
+
+.json {
+  background-color: #f6f6f6;
+  padding: 1rem;
+  font-size: 1rem;
+  width: 100%;
 }

@@ -1,35 +1,53 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import dedent from 'dedent';
+import styles from '../styles/Home.module.css';
 import {
   useState
 } from 'react';
 
-export default function Home(props) {
-  const [ search, setSearch ] = useState();
+const defaultQuery = dedent`
+    fields name,summary,rating;
+    search "zelda";
+    limit 50;`;
+
+export default function Home() {
+  const [ query, setQuery ] = useState(defaultQuery);
+  const [ endpoint, setEndpoint ] = useState('games');
   const [ results, setResults ] = useState([]);
+  const [ loading, setLoading ] = useState(false);
 
   async function submit(e) {
     e.preventDefault();
+    setLoading(true);
 
     // make a search request with our API
-    console.log(`/api/search?q=${search}`);
-    const res = await fetch(`/api/search?q=${search}`);
+    const res = await fetch(`/api/search?q=${query}&e=${endpoint}`);
     const json = await res.json();
     setResults(json);
+    setLoading(false);
   }
 
   return (
     <div className={styles.container}>
-      <input
-        type="text"
+      <textarea
+        className={styles.query}
         placeholder="Search IGDB"
-        onChange={(e) => setSearch(e.target.value)}></input>
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}></textarea>
 
-      <button onClick={submit}>Search</button>
+      <button
+        className={styles.button}
+        onClick={submit}>Query</button>
+
+      {loading &&
+        <p>Fetching results...</p>
+      }
 
       {results.length > 0 &&
-        <pre>{JSON.stringify(results, null, 2)}</pre>
+        <div className={styles.results}>
+          <pre className={styles.json}>
+            {JSON.stringify(results, null, 2)}
+          </pre>
+        </div>
       }
     </div>
   )

@@ -15,14 +15,6 @@ function log(request) {
   console.log(`${request.method} ${request.url} ${JSON.stringify(request.body)}`);
 }
 
-function makeQuery(options) {
-  return `
-    fields name,summary,release_dates,genres.name,rating;
-    search "${options.q}";
-    limit 50;
-  `;
-}
-
 export default async function handler(req, res) {
   log(req);
   // get token
@@ -30,13 +22,13 @@ export default async function handler(req, res) {
 
   // make a search request
   // https://api-docs.igdb.com/#search-1
-  const response = await request('https://api.igdb.com/v4/games/', {
+  const response = await request(`https://api.igdb.com/v4/${req.query.e}`, {
     method: 'POST',
     headers: {
       'Client-ID': process.env.TWITCH_CLIENT_ID,
       'Authorization': `Bearer ${token}`
     },
-    body: makeQuery(req.query)
+    body: req.query.q
   });
 
   const json = await response.body.json();
