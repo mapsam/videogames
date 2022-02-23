@@ -1,0 +1,11 @@
+.container {
+  display: block;
+  margin: auto;
+  max-width: 800px;
+}
+
+.results-continaer {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
